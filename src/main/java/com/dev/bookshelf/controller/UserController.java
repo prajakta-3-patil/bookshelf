@@ -1,23 +1,37 @@
 package com.dev.bookshelf.controller;
 
+import com.dev.bookshelf.model.Book;
+import com.dev.bookshelf.model.User;
 import com.dev.bookshelf.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping(path="/user")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping(path = "/user/profile")
-    public String viewProfile() {
-        return userService.viewProfile("user1");
+    @PostMapping(path = "/new")
+    public @ResponseBody User register(@RequestBody User user) {
+        return userService.register(user);
     }
 
-    @PostMapping(path = "/user/new")
-    public String register() {
-        return userService.register();
+    @GetMapping(path = "/profile/{email}")
+    public @ResponseBody User viewProfile(@PathVariable String email) {
+        return userService.viewProfile(email);
     }
+
+    @GetMapping(path = "/booklist")
+    public @ResponseBody List<Book> viewBooksByUser(@RequestParam("email") String email) {
+        return userService.viewBooksByUser(email);
+    }
+
+    @DeleteMapping(path = "/delete/{email}")
+    public void deleteUser(@PathVariable String email){
+        userService.deleteUser(email);
+    }
+
 }

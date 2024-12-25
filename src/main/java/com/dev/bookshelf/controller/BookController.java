@@ -1,33 +1,35 @@
 package com.dev.bookshelf.controller;
 
+import com.dev.bookshelf.model.Book;
 import com.dev.bookshelf.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping(path="/book")
 public class BookController {
     @Autowired
     BookService bookService;
 
-    @GetMapping(path = "/book/list")
-    public String listBooks(){
-        return bookService.listAllBooks();
+    @GetMapping(path = "/list/available")
+    public @ResponseBody List<Book> listAvailableBooks(){
+        return bookService.listAvailableBooks();
     }
 
-    @PostMapping(path = "/book/new")
-    public String storeBooks(){
-        return bookService.saveBook();
+    @PostMapping(path = "/new")
+    public @ResponseBody Book storeBook(@RequestBody Book book){
+        return bookService.saveBook(book);
     }
 
-    @PostMapping(path = "/book/changeprice")
-    public int updateBookPrice(){
-        return bookService.updatePrice(2,100);
+    @PutMapping(path = "/changeprice")
+    public int updateBookPrice(@RequestParam("bookid") int id, @RequestParam("newPrice") double newPrice){
+        return bookService.updatePrice(id,newPrice);
     }
 
-    @PostMapping(path = "/book/delete")
-    public void deleteBook(){
-        bookService.deleteBook(2);
+    @DeleteMapping(path = "/delete/{id}")
+    public void deleteBook(@PathVariable int id){
+        bookService.deleteBook(id);
     }
 }

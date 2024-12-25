@@ -1,12 +1,16 @@
 package com.dev.bookshelf.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="BOOK")
 public class Book {
 
@@ -15,11 +19,8 @@ public class Book {
     @Column(name="ID")
     private int id;
 
-    @Column(name="ISBN")
-    private int isbn;
-
-    @Column(name="NAME")
-    private String name;
+    @Column(name="TITLE")
+    private String title;
 
     @Column(name="AUTHOR")
     private String author;
@@ -30,6 +31,9 @@ public class Book {
     @Column(name="PRICE")
     private double price;
 
-    @Column(name="QUANTITY")
-    private int quantity=1;
+    @Column(name="AVAILABLE_COPIES")
+    private int availableCopies;
+
+    @Column(name="OWNER_EMAIL")
+    private String ownerEmail;
 }

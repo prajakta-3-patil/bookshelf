@@ -13,21 +13,12 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
-    public String listAllBooks(){
-        List<Book> books = bookRepository.findAll();
-        return books.toString();
+    public List<Book> listAvailableBooks(){
+        return bookRepository.findByAvailableCopiesGreaterThan(0);
     }
 
-    public String saveBook(){
-        Book book = new Book();
-        book.setIsbn(456);
-        book.setName("pqr");
-        book.setAuthor("author2");
-        book.setCategory("cat2");
-        book.setPrice(200.888);
-        book.setQuantity(5);
-        book = bookRepository.save(book);
-        return book.toString();
+    public Book saveBook(Book book){
+        return bookRepository.save(book);
     }
 
     @Transactional
