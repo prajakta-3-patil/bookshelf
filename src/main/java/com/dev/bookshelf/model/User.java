@@ -1,9 +1,7 @@
 package com.dev.bookshelf.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString(exclude = "password")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -32,17 +31,8 @@ public class User {
     @Column(name = "ADDRESS")
     public String address;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
-//    @OneToMany(orphanRemoval = true)
-//    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
-    @JoinColumn(name = "OWNER_EMAIL")
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Book> bookList = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "E-Mail: '"+this.eMail
-                +"', First Name: '"+this.firstName
-                +"', Last Name: '"+this.lastName
-                +"', Address: '"+this.address+"'";
-    }
 }

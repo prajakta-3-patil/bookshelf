@@ -1,6 +1,7 @@
 package com.dev.bookshelf.controller;
 
-import com.dev.bookshelf.model.Book;
+import com.dev.bookshelf.dto.BookDTO;
+import com.dev.bookshelf.dto.UserDTO;
 import com.dev.bookshelf.model.User;
 import com.dev.bookshelf.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,17 @@ public class UserController {
     UserService userService;
 
     @PostMapping(path = "/new")
-    public @ResponseBody User register(@RequestBody User user) {
+    public @ResponseBody UserDTO register(@RequestBody User user) {
         return userService.register(user);
     }
 
     @GetMapping(path = "/profile/{email}")
-    public @ResponseBody User viewProfile(@PathVariable String email) {
+    public @ResponseBody UserDTO viewProfile(@PathVariable String email) {
         return userService.viewProfile(email);
     }
 
     @GetMapping(path = "/booklist")
-    public @ResponseBody List<Book> viewBooksByUser(@RequestParam("email") String email) {
+    public @ResponseBody List<BookDTO> viewBooksByUser(@RequestParam("email") String email) {
         return userService.viewBooksByUser(email);
     }
 

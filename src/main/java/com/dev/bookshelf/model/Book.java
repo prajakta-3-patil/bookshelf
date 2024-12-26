@@ -1,5 +1,6 @@
 package com.dev.bookshelf.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,12 @@ public class Book {
 
     @Column(name="AVAILABLE_COPIES")
     private int availableCopies;
+//
+//    @Transient
+//    private String userEmail;
 
-    @Column(name="OWNER_EMAIL")
-    private String ownerEmail;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name ="OWNER_EMAIL", referencedColumnName = "E_MAIL")
+    private User user;
 }

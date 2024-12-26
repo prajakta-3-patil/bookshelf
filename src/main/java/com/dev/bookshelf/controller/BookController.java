@@ -1,6 +1,6 @@
 package com.dev.bookshelf.controller;
 
-import com.dev.bookshelf.model.Book;
+import com.dev.bookshelf.dto.BookDTO;
 import com.dev.bookshelf.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +14,13 @@ public class BookController {
     BookService bookService;
 
     @GetMapping(path = "/list/available")
-    public @ResponseBody List<Book> listAvailableBooks(){
+    public @ResponseBody List<BookDTO> listAvailableBooks(){
         return bookService.listAvailableBooks();
     }
 
     @PostMapping(path = "/new")
-    public @ResponseBody Book storeBook(@RequestBody Book book){
-        return bookService.saveBook(book);
+    public @ResponseBody BookDTO storeBook(@RequestBody BookDTO bookDTO){
+        return bookService.saveBook(bookDTO);
     }
 
     @PutMapping(path = "/changeprice")
