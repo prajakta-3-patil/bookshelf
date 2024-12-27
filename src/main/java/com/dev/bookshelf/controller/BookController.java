@@ -32,4 +32,20 @@ public class BookController {
     public void deleteBook(@PathVariable int id){
         bookService.deleteBook(id);
     }
+
+
+    @GetMapping(path = "/category/{category}")
+    public @ResponseBody List<BookDTO> searchByCategory(@PathVariable String category) {
+        return bookService.searchByCategory(category);
+    }
+
+    @GetMapping(path = "/author/{author}")
+    public @ResponseBody List<BookDTO> searchByAuthor(@PathVariable String author) {
+        return bookService.searchByAuthor(author);
+    }
+
+    @GetMapping(path = "/title/{title}")
+    public @ResponseBody List<BookDTO> searchByTitle(@PathVariable String title) {
+        return bookService.searchByTitle(title);
+    }
 }

@@ -29,6 +29,28 @@ public class BookService {
                 .map(b->bookMapper.toDTO(b)).collect(Collectors.toList());
     }
 
+    public List<BookDTO> searchByCategory(String category){
+        return bookRepository.findByCategoryAndAvailableCopiesGreaterThan(category,0)
+                .stream()
+                .map(b->bookMapper.toDTO(b)).collect(Collectors.toList());
+    }
+
+    public List<BookDTO> searchByAuthor(String author){
+        return bookRepository.findByAuthorAndAvailableCopiesGreaterThan(author,0)
+                .stream()
+                .map(b->bookMapper.toDTO(b)).collect(Collectors.toList());
+    }
+
+    public List<BookDTO> searchByTitle(String title){
+        return bookRepository.findByTitleAndAvailableCopiesGreaterThan(title,0)
+                .stream()
+                .map(b->bookMapper.toDTO(b)).collect(Collectors.toList());
+    }
+
+    public Book getBookById(int id) {
+        return bookRepository.getById(id);
+    }
+
     public BookDTO saveBook(BookDTO bookDTO){
         Book book = bookMapper.toEntity(bookDTO);
         book.setUser(userRepository.getById(bookDTO.getOwnerEmail()));
@@ -37,9 +59,12 @@ public class BookService {
 
     @Transactional
     public int updatePrice(int id, double price){
-        Book book = bookRepository.getById(id);
-        book.setPrice(price);
         return bookRepository.updatePriceById(id,price);
+    }
+
+    @Transactional
+    public int updateAvailableCopies(int id, int availableCopies){
+        return bookRepository.updateAvailableCopies(id,availableCopies);
     }
 
     @Transactional

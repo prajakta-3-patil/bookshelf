@@ -12,4 +12,14 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     public int updatePriceById(int id, double price);
 
     public List<Book> findByAvailableCopiesGreaterThan(int val);
+
+    public List<Book> findByAvailableCopiesGreaterThanAndUserNotContaining(int val, String email);
+
+    @Modifying
+    @Query("update Book set AVAILABLE_COPIES = ?2 where id = ?1")
+    public int updateAvailableCopies(int id, int availableCopies);
+
+    public List<Book> findByCategoryAndAvailableCopiesGreaterThan(String category, int val);
+    public List<Book> findByTitleAndAvailableCopiesGreaterThan(String title, int val);
+    public List<Book> findByAuthorAndAvailableCopiesGreaterThan(String author, int val);
 }
