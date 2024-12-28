@@ -2,6 +2,8 @@ package com.dev.bookshelf.service;
 
 import com.dev.bookshelf.dto.BookDTO;
 import com.dev.bookshelf.dto.UserDTO;
+import com.dev.bookshelf.exception.UserAlreadyExistsException;
+import com.dev.bookshelf.exception.UserNotFoundException;
 import com.dev.bookshelf.mapper.BookMapper;
 import com.dev.bookshelf.mapper.UserMapper;
 import com.dev.bookshelf.model.User;
@@ -25,11 +27,14 @@ public class UserService {
     BookMapper bookMapper;
 
     public UserDTO register(User user) {
+        if(userRepository.findById(user.getEMail()).orElse(null)!=null) throw new UserAlreadyExistsException("User already registered!");
         return userMapper.toDTO(userRepository.save(user));
     }
 
     public UserDTO viewProfile(String email) {
-        return userMapper.toDTO(userRepository.getById(email));
+        User user = userRepository.findById(email).orElse(null);
+        if(user == null) throw new UserNotFoundException("No such User!");
+        return userMapper.toDTO(user);
     }
 
     public List<BookDTO> viewBooksByUser(String email) {
