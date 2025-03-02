@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="/book")
+@RequestMapping(path="/books")
 public class BookController {
     @Autowired
     BookService bookService;
 
-    @GetMapping(path = "/list/available")
+    @GetMapping(path = "/available")
     public @ResponseBody List<BookDTO> listAvailableBooks(){
         return bookService.listAvailableBooks();
     }
@@ -23,12 +23,12 @@ public class BookController {
         return bookService.saveBook(bookDTO);
     }
 
-    @PutMapping(path = "/changeprice")
+    @PutMapping(path = "/price/new")
     public int updateBookPrice(@RequestParam("bookid") int id, @RequestParam("newPrice") double newPrice){
         return bookService.updatePrice(id,newPrice);
     }
 
-    @DeleteMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/{id}")
     public void deleteBook(@PathVariable int id){
         bookService.deleteBook(id);
     }

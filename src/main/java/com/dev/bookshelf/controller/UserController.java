@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="/user")
+@RequestMapping(path="/users")
 public class UserController {
     @Autowired
     UserService userService;
@@ -32,24 +32,24 @@ public class UserController {
         return userService.viewProfile(email);
     }
 
-    @GetMapping(path = "/booklist")
+    @GetMapping(path = "/books")
     public @ResponseBody List<BookDTO> viewBooksByUser(@RequestParam("email") String email) {
         return userService.viewBooksByUser(email);
     }
 
-    @DeleteMapping(path = "/delete/{email}")
+    @DeleteMapping(path = "/{email}")
     public void deleteUser(@PathVariable String email){
         userService.deleteUser(email);
     }
 
-    @PostMapping(path = "/purchaseBook")
+    @PostMapping(path = "/book/new")
     public Transaction purchaseBook(@RequestParam("email") String email,
                                     @RequestParam("bookId") int bookId,
                                     @RequestParam("copies") int copies){
         return transactionService.purchaseBook(email, bookId, copies);
     }
 
-    @GetMapping(path = "/purchaseHistory")
+    @GetMapping(path = "/history")
     public List<Transaction> viewPurchaseHistory(@RequestParam("email") String email,
                                     @RequestParam("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fromDate,
                                     @RequestParam("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime toDate){
